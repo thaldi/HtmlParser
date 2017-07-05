@@ -19,7 +19,7 @@ namespace imdb.HtmlParser
             HWeb = new HtmlWeb();
         }
 
-        //geting box office
+        //getting box office
         public List<BaseModel> GetBoxOffice()
         {
             try
@@ -83,7 +83,7 @@ namespace imdb.HtmlParser
             }
         }
 
-        //geting coming soon
+        //getting coming soon
         public List<TheaterModel> GetInThreaters()
         {
             var list = new List<TheaterModel>();
@@ -254,7 +254,7 @@ namespace imdb.HtmlParser
             }
         }
 
-        //geting title detail
+        //getting title detail
         public TitleDetail GetTitleDetail(string id)
         {
             var detailItem = new TitleDetail();
@@ -270,7 +270,7 @@ namespace imdb.HtmlParser
                 {
                     if (item.HasAttributes)
                     {
-                        //geting sumary
+                        //getting sumary
                         var summary = (from i in HtmlDocument.DocumentNode.Descendants("div")
                                        from j in i.Descendants("div")
                                        where j.Attributes["itemprop"] != null
@@ -279,7 +279,7 @@ namespace imdb.HtmlParser
                                        j.InnerText).FirstOrDefault().Trim();
                         detailItem.Summary = summary;
 
-                        //geting rate,year,rate count,categories
+                        //getting rate,year,rate count,categories
                         if (item.Attributes["class"] != null)
                         {
                             if (item.Attributes["class"].Value == "title_bar_wrapper")
@@ -302,7 +302,7 @@ namespace imdb.HtmlParser
                                 }
                             }
 
-                            //geting directors, writers, stars
+                            //getting directors, writers, stars
                             if (item.Attributes["class"].Value.Trim() == "plot_summary_wrapper")
                             {
                                 var temp = TempLoader(item.InnerHtml);
@@ -331,12 +331,12 @@ namespace imdb.HtmlParser
                     }
                 }
 
-                //geting title
+                //getting title
                 var titleStr = (from i in HtmlDocument.DocumentNode.Descendants("h1")
                                 select i.InnerText).FirstOrDefault().ToString().Trim().Replace("&nbsp;", string.Empty);
                 detailItem.Title = titleStr;
 
-                //geting poster
+                //getting poster
                 var imgUrl = (from i in HtmlDocument.DocumentNode.Descendants("div")
                               where i.Attributes["class"] != null
                               where i.Attributes["class"].Value == "poster"
@@ -345,10 +345,10 @@ namespace imdb.HtmlParser
                               select j.Attributes["src"].Value).FirstOrDefault().ToString();
                 detailItem.Poster = imgUrl;
 
-                //geting release deta
+                //getting release deta
                 detailItem.ReleaseDate = GetTitleReleaseDates(id);
 
-                //todo:geting trailer url
+                //todo:getting trailer url
                 var trailerUrl= (from i in HtmlDocument.DocumentNode.Descendants("div")
                                  where i.Attributes["class"] != null
                                  where i.Attributes["class"].Value == "slate"
