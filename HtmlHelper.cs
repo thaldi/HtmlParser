@@ -260,7 +260,8 @@ namespace imdb.HtmlParser
             var detailItem = new TitleDetail();
             try
             {
-                HtmlDocument = HWeb.Load("http://www.imdb.com/title/tt3748528/"); //set id into the link
+                //set id into the link at calling this method
+                HtmlDocument = HWeb.Load("http://www.imdb.com/title/tt3748528/"); 
 
                 var data = from i in HtmlDocument.DocumentNode.Descendants("div")
                            select i;
@@ -477,6 +478,7 @@ namespace imdb.HtmlParser
         {
             try
             {
+                //set id and videoID into below url at calling this method
                 HtmlDocument = HWeb.Load("http://www.imdb.com/title/tt3748528/videoplayer/vi1942205977");
 
                 var url = (from i in HtmlDocument.DocumentNode.Descendants("iframe")
